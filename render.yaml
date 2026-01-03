@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: cobalt-api
+    runtime: docker
+    plan: free # Change to 'starter' if you want it always on
+    envVars:
+      - key: API_URL
+        sync: false # Render will ask you to type your URL on setup
+      - key: API_PORT
+        value: 9000
+      - key: API_AUTH_REQUIRED
+        value: "1" # Set to 1 if you want to use your API keys
