@@ -10,6 +10,7 @@ COPY . /app
 RUN git init && \
     git config user.email "bot@render.com" && \
     git config user.name "RenderBot" && \
+    git remote add origin https://github.com/imputnet/cobalt.git && \
     git add . && \
     git commit -m "initial commit"
 
