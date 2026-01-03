@@ -1,11 +1,17 @@
 FROM node:24-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+RUN apk add --no-cache git
 
 FROM base AS build
 WORKDIR /app
 RUN mkdir -p .git
 COPY . /app
+RUN git init && \
+    git config user.email "bot@render.com" && \
+    git config user.name "RenderBot" && \
+    git add . && \
+    git commit -m "initial commit"
 
 RUN corepack enable
 RUN apk add --no-cache python3 alpine-sdk
