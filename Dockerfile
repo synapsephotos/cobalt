@@ -4,6 +4,7 @@ ENV PATH="$PNPM_HOME:$PATH"
 
 FROM base AS build
 WORKDIR /app
+RUN mkdir -p .git
 COPY . /app
 
 RUN corepack enable
@@ -18,7 +19,7 @@ FROM base AS api
 WORKDIR /app
 
 COPY --from=build --chown=node:node /prod/api /app
-# COPY --from=build --chown=node:node /app/.git /app/.git
+COPY --from=build --chown=node:node /app/.git /app/.git
 
 USER node
 
