@@ -469,6 +469,27 @@ export default function instagram(obj) {
         } catch {}
     }
 
+    async function getProfile(username) {
+        const cookie = getCookie('instagram');
+        const url = new URL('https://www.instagram.com/api/v1/users/web_profile_info/');
+        url.searchParams.set('username', username);
+
+        try {
+            const data = await request(url, cookie);
+            const user = data?.data?.user;
+
+            if (!user) return { error: "fetch.empty" };
+
+            return {
+                urls: user.profile_pic_url_hd || user.profile_pic_url,
+                isPhoto: true,
+                filename: `instagram_pfp_${username}.jpg`,
+            };
+        } catch {
+            return { error: "fetch.fail" };
+        }
+    }
+
     async function getStory(username, id) {
         const cookie = getCookie('instagram');
         if (!cookie) return { error: "link.unsupported" };
@@ -536,6 +557,7 @@ export default function instagram(obj) {
 
     if (postId) return getPost(postId, alwaysProxy);
     if (username && storyId) return getStory(username, storyId);
+    if (username) return getProfile(username);
 
     return { error: "fetch.empty" }
 }
