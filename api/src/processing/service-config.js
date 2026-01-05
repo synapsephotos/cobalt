@@ -55,6 +55,7 @@ export const services = {
 
             ":username/p/:postId",
             ":username/reel/:postId",
+            ":username",
         ],
         altDomains: ["ddinstagram.com"],
     },
